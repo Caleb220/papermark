@@ -31,7 +31,7 @@ export const getFeatureFlags = async ({ teamId }: { teamId?: string }) => {
     annotations: true,
     dataroomInvitations: true,
     workflows: true,
-    ai: false,
+    ai: true,
     sso: false,
     textSelection: true,
   };

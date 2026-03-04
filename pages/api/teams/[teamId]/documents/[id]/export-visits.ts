@@ -94,11 +94,7 @@ export default async function handler(
       return res.status(404).end("Team not found");
     }
 
-    if (team.plan.includes("free")) {
-      return res
-        .status(403)
-        .json({ message: "This feature is not available for your plan" });
-    }
+    // Allow all plans for self-hosted
 
     // Fetching Document based on document.id
     const document = await prisma.document.findUnique({

@@ -519,6 +519,42 @@ export const uploadImage = async (
   file: File,
   uploadType: "profile" | "assets" = "assets",
 ) => {
+  if (process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT === "s3") {
+    // S3-based image upload
+    const presignedRes = await fetch(
+      `/api/file/s3/image-upload?type=${uploadType}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fileName: file.name,
+          contentType: file.type,
+        }),
+      },
+    );
+    if (!presignedRes.ok) {
+      throw new Error(`Failed to get presigned URL: ${presignedRes.status}`);
+    }
+    const { url, key } = await presignedRes.json();
+    const uploadRes = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": file.type },
+      body: file,
+    });
+    if (!uploadRes.ok) {
+      throw new Error(`Failed to upload image: ${uploadRes.status}`);
+    }
+    // Return the public URL for the uploaded image
+    const endpoint = process.env.NEXT_PUBLIC_UPLOAD_ENDPOINT;
+    if (endpoint) {
+      return `${endpoint}/${key}`;
+    }
+    // Fallback: construct URL from the presigned URL's origin
+    const urlObj = new URL(url);
+    return `${urlObj.origin}/${key}`;
+  }
+
+  // Vercel Blob fallback
   const newBlob = await upload(file.name, file, {
     access: "public",
     handleUploadUrl: `/api/file/image-upload?type=${uploadType}`,

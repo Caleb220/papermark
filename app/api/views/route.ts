@@ -589,8 +589,7 @@ export async function POST(request: NextRequest) {
         const featureFlags = await getFeatureFlags({
           teamId: link.teamId!,
         });
-        const inDocumentLinks =
-          !link.team?.plan.includes("free") || featureFlags.inDocumentLinks;
+        const inDocumentLinks = true;
 
         // get pages from document version
         console.time("get-pages");

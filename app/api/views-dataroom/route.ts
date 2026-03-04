@@ -878,8 +878,8 @@ export async function POST(request: NextRequest) {
             file: true,
             storageType: true,
             pageNumber: true,
-            embeddedLinks: !link.team?.plan.includes("free"),
-            pageLinks: !link.team?.plan.includes("free"),
+            embeddedLinks: true,
+            pageLinks: true,
             metadata: true,
           },
         });

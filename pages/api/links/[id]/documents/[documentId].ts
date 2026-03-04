@@ -131,12 +131,7 @@ export default async function handle(
     const returnLink = {
       ...link,
       dataroomDocument: linkData.dataroom?.documents[0],
-      ...(teamPlan === "free" && {
-        customFields: [], // reset custom fields for free plan
-        enableAgreement: false,
-        enableWatermark: false,
-        permissionGroupId: null,
-      }),
+      // All features enabled for self-hosted
     };
 
     return res.status(200).json({ linkType, link: returnLink, brand });

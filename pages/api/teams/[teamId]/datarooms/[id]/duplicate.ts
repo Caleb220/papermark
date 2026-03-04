@@ -169,12 +169,7 @@ export default async function handle(
         return res.status(401).end("Unauthorized");
       }
 
-      if (team.plan.includes("drtrial")) {
-        return res.status(403).json({
-          message:
-            "You've reached the limit of datarooms. Consider upgrading your plan.",
-        });
-      }
+      // Allow all plans for self-hosted
 
       // Check if team is paused
       const teamIsPaused = await isTeamPausedById(teamId);

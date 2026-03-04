@@ -142,19 +142,7 @@ export default async function handle(
       }
 
       const teamPlan = link.team?.plan || "free";
-      const teamId = link.teamId;
-      // if owner of document is on free plan, return 404
-      if (teamPlan.includes("free")) {
-        log({
-          message: `Link is from a free team _${teamId}_ for custom domain _${domain}/${slug}_`,
-          type: "info",
-          mention: true,
-        });
-        return res.status(404).json({
-          error: "Link not found",
-          message: `link found, team ${teamPlan}`,
-        });
-      }
+      // Allow all plans for self-hosted
 
       const linkType = link.linkType;
 
@@ -230,12 +218,7 @@ export default async function handle(
         team: undefined,
         document: undefined,
         dataroom: undefined,
-        ...(teamPlan === "free" && {
-          customFields: [], // reset custom fields for free plan
-          enableAgreement: false,
-          enableWatermark: false,
-          permissionGroupId: null,
-        }),
+        // All features enabled for self-hosted
       };
 
       // clean up the link return object

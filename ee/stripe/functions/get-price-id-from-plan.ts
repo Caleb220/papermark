@@ -30,7 +30,7 @@ export function getPriceIdFromPlan({
   );
 
   if (!plan) {
-    console.error(`Plan not found: ${cleanPlan}`);
+    // Suppress noise for self-hosted (free plan has no Stripe price)
     return undefined;
   }
 

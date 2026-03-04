@@ -50,9 +50,7 @@ export default async function handle(
         return res.status(401).end("Unauthorized");
       }
 
-      if (team.plan.includes("free")) {
-        return res.status(403).end("Forbidden");
-      }
+      // Allow all plans for self-hosted
 
       const customFields = await prisma.customFieldResponse.findFirst({
         where: {

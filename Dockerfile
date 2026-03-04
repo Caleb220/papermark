@@ -22,6 +22,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_PUBLIC_BASE_URL=https://data.odinkor.com
 ENV NEXT_PUBLIC_MARKETING_URL=https://data.odinkor.com
+ENV NEXT_PUBLIC_UPLOAD_TRANSPORT=s3
 RUN npm run build
 
 FROM base AS runner

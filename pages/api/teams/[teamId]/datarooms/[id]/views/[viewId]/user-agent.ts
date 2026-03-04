@@ -51,9 +51,6 @@ export default async function handle(
         return res.status(401).end("Unauthorized");
       }
 
-      if (team.plan.includes("free")) {
-        return res.status(403).end("Forbidden");
-      }
       const userAgent = await getViewUserAgent({
         viewId: viewId,
       });
@@ -64,14 +61,8 @@ export default async function handle(
         return res.status(404).end("No user agent data found");
       }
 
-      // Include country and city for business and datarooms plans
-      if (team.plan.includes("business") || team.plan.includes("datarooms")) {
-        return res.status(200).json(userAgentData);
-      } else {
-        // For other plans, exclude country and city
-        const { country, city, ...remainingResponse } = userAgentData;
-        return res.status(200).json(remainingResponse);
-      }
+      // Include all data for self-hosted
+      return res.status(200).json(userAgentData);
     } catch (error) {
       errorhandler(error, res);
     }

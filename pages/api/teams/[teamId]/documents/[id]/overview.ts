@@ -127,19 +127,8 @@ export default async function handle(
     const hasLinks = document._count.links > 0;
     const hasViews = document._count.views > 0;
 
-    // Check for page links only if needed
-    let hasPageLinks = false;
-    if (primaryVersion && team.plan.includes("free")) {
-      const pageLinksCount = await prisma.documentPage.count({
-        where: {
-          versionId: primaryVersion.id,
-          pageLinks: {
-            not: Prisma.JsonNull,
-          },
-        },
-      });
-      hasPageLinks = pageLinksCount > 0;
-    }
+    // Skip page links upsell check for self-hosted
+    const hasPageLinks = false;
 
     // Basic response for instant loading
     const response = {
