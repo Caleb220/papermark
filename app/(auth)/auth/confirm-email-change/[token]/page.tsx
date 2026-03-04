@@ -25,7 +25,7 @@ const data = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.papermark.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://www.odinkor.com"),
   title: data.title,
   description: data.description,
   openGraph: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: data.title,
     description: data.description,
-    creator: "@papermarkio",
+    creator: "@odinkor",
     images: ["/_static/meta-image.png"],
   },
 };
@@ -80,6 +80,8 @@ const VerifyEmailChange = async ({ params: { token } }: PageProps) => {
   }
 
   const currentUserId = (session.user as CustomUser).id;
+
+  if (!redis) return <NotFound />;
 
   const data = await redis.get<{ email: string; newEmail: string }>(
     `email-change-request:user:${currentUserId}`,
@@ -128,6 +130,6 @@ const deleteRequest = async (tokenFound: VerificationToken) => {
       },
     }),
 
-    redis.del(`email-change-request:user:${tokenFound.identifier}`),
+    redis?.del(`email-change-request:user:${tokenFound.identifier}`),
   ]);
 };

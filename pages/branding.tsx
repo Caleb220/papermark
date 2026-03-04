@@ -744,7 +744,7 @@ export default function Branding() {
 
               {/* Action Buttons - Always Visible */}
               <div className="flex items-center gap-4 border-t bg-background pt-4">
-                {plan === "free" && !isTrial ? (
+                {false ? (
                   <UpgradeButton
                     text="Save changes"
                     clickedPlan={PlanEnum.Pro}

@@ -25,7 +25,7 @@ const DataRoomsInformationEmail = () => {
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 w-[465px] p-5">
             <Text className="mx-0 mb-8 mt-4 p-0 text-center text-2xl font-normal">
-              <span className="font-bold tracking-tighter">Papermark</span>
+              Odinkor
             </Text>
             <Text className="mx-0 mb-8 mt-4 p-0 text-center text-2xl font-normal">
               Virtual Data Rooms
@@ -47,7 +47,7 @@ const DataRoomsInformationEmail = () => {
             <Text className="text-sm">
               All about Papermark{" "}
               <a
-                href="https://www.papermark.com/data-room"
+                href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}/data-room`}
                 className="text-blue-500 underline"
               >
                 Data Rooms
@@ -57,21 +57,14 @@ const DataRoomsInformationEmail = () => {
             <Section className="my-8 text-center">
               <Button
                 className="rounded bg-black text-center text-xs font-semibold text-white no-underline"
-                href={`https://app.papermark.com/datarooms?utm_source=dataroom-info&utm_medium=email&utm_campaign=20240723&utm_content=upload_documents`}
+                href={`${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/datarooms`}
                 style={{ padding: "12px 20px" }}
               >
                 Create new data room
               </Button>
             </Section>
             <Text className="text-sm">
-              If you require a fully customizable experience,{" "}
-              <a
-                href="https://cal.com/marcseitz/papermark"
-                className="text-blue-500 underline"
-              >
-                book a call
-              </a>{" "}
-              with us.
+              If you require a fully customizable experience, reach out to us.
             </Text>
             <Footer
               withAddress={false}

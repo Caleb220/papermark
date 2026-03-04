@@ -16,7 +16,8 @@ type PreviewSession = z.infer<typeof ZPreviewSessionSchema>;
 async function createPreviewSession(
   linkId: string,
   userId: string,
-): Promise<{ token: string; expiresAt: number }> {
+): Promise<{ token: string; expiresAt: number } | null> {
+  if (!redis) return null;
   const sessionToken = crypto.randomBytes(32).toString("hex");
   const expiresAt = Date.now() + PREVIEW_EXPIRATION_TIME;
 
@@ -47,6 +48,7 @@ async function verifyPreviewSession(
   userId: string,
   linkId: string,
 ): Promise<PreviewSession | null> {
+  if (!redis) return null;
   const sessionToken = previewToken;
   if (!sessionToken) return null;
 

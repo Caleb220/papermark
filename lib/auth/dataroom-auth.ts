@@ -53,7 +53,8 @@ async function createDataroomSession(
   ipAddress: string,
   verified: boolean,
   viewerId?: string,
-): Promise<{ token: string; expiresAt: number }> {
+): Promise<{ token: string; expiresAt: number } | null> {
+  if (!redis) return null;
   const sessionToken = crypto.randomBytes(32).toString("hex");
   const expiresAt = Date.now() + COOKIE_EXPIRATION_TIME;
 
@@ -88,6 +89,7 @@ async function verifyDataroomSession(
   linkId: string,
   dataroomId: string,
 ): Promise<DataroomSession | null> {
+  if (!redis) return null;
   if (!dataroomId) return null;
 
   const sessionToken = cookies().get(`pm_drs_${linkId}`)?.value;
@@ -151,6 +153,7 @@ export async function getDataroomSessionByLinkIdInPagesRouter(
   req: NextApiRequest,
   linkId: string,
 ): Promise<DataroomSession | null> {
+  if (!redis) return null;
   if (!linkId) return null;
 
   const cookies = parse(req.headers.cookie || "");
@@ -199,6 +202,7 @@ export async function updateDataroomSessionVerified(
   sessionToken: string,
   verified: boolean,
 ): Promise<boolean> {
+  if (!redis) return false;
   if (!sessionToken) return false;
 
   const raw = await redis.get(`dataroom_session:${sessionToken}`);

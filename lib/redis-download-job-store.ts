@@ -60,6 +60,7 @@ export class RedisDownloadJobStore {
   async createJob(
     jobData: Omit<DownloadJob, "id" | "createdAt" | "updatedAt">,
   ): Promise<DownloadJob> {
+    if (!redis) throw new Error("Redis is required for download job store");
     const jobId = nanoid();
     const now = new Date().toISOString();
 
@@ -94,6 +95,7 @@ export class RedisDownloadJobStore {
   }
 
   async getJob(jobId: string): Promise<DownloadJob | null> {
+    if (!redis) throw new Error("Redis is required for download job store");
     const jobKey = this.getJobKey(jobId);
     const jobData = await redis.get(jobKey);
 
@@ -118,6 +120,7 @@ export class RedisDownloadJobStore {
     jobId: string,
     updates: Partial<DownloadJob>,
   ): Promise<DownloadJob | null> {
+    if (!redis) throw new Error("Redis is required for download job store");
     const job = await this.getJob(jobId);
     if (!job) {
       return null;
@@ -139,6 +142,7 @@ export class RedisDownloadJobStore {
     teamId: string,
     limit: number = 20,
   ): Promise<DownloadJob[]> {
+    if (!redis) throw new Error("Redis is required for download job store");
     const teamJobsKey = this.getTeamJobsKey(teamId);
 
     // Get job IDs sorted by creation time (newest first)
@@ -184,6 +188,7 @@ export class RedisDownloadJobStore {
     viewerEmail: string,
     limit: number = 20,
   ): Promise<DownloadJob[]> {
+    if (!redis) throw new Error("Redis is required for download job store");
     const viewerJobsKey = this.getViewerJobsKey(linkId, viewerEmail);
     const jobIds = await redis.zrange(viewerJobsKey, 0, limit - 1, {
       rev: true,

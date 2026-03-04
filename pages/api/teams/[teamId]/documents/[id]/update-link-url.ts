@@ -1,13 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { get } from "@vercel/edge-config";
 import { getServerSession } from "next-auth/next";
 
-import { isTrustedTeam } from "@/lib/edge-config/trusted-teams";
 import prisma from "@/lib/prisma";
 import { CustomUser } from "@/lib/types";
-import { log } from "@/lib/utils";
 import { linkUrlUpdateSchema } from "@/lib/zod/url-validation";
 
 export default async function handle(
@@ -80,30 +77,6 @@ export default async function handle(
 
     if (!document.versions[0]) {
       return res.status(400).json({ message: "Document has no versions" });
-    }
-
-    // Check if URL contains blocked keywords (skip for trusted teams)
-    const trusted = await isTrustedTeam(teamId);
-    if (!trusted) {
-      const keywords = await get("keywords");
-      if (Array.isArray(keywords) && keywords.length > 0) {
-        const matchedKeyword = keywords.find(
-          (keyword) =>
-            typeof keyword === "string" && validatedUrl.includes(keyword),
-        );
-
-        if (matchedKeyword) {
-          log({
-            message: `Link URL update blocked: ${matchedKeyword} \n\n \`Metadata: {teamId: ${teamId}, documentId: ${documentId}, url: ${validatedUrl}}\``,
-            type: "error",
-            mention: true,
-          });
-          return res.status(400).json({
-            message: "This URL is not allowed",
-            matchedKeyword: matchedKeyword,
-          });
-        }
-      }
     }
 
     // Update document version

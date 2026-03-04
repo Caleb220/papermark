@@ -185,7 +185,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
             metaFavicon: link.metaFavicon || "/favicon.ico",
             metaUrl: `https://${domain}/${slug}` || null,
           },
-          showAccountCreationSlide: link.showBanner || teamPlan === "free",
+          showAccountCreationSlide: link.showBanner,
           useAdvancedExcelViewer: advancedExcelEnabled,
           useCustomAccessForm:
             teamId === "cm0154tiv0000lr2t6nr5c6kp" ||

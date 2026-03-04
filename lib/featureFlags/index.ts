@@ -1,5 +1,3 @@
-import { get } from "@vercel/edge-config";
-
 export type BetaFeatures =
   | "tokens"
   | "incomingWebhooks"
@@ -18,10 +16,8 @@ export type BetaFeatures =
   | "sso"
   | "textSelection";
 
-type BetaFeaturesRecord = Record<BetaFeatures, string[]>;
-
 export const getFeatureFlags = async ({ teamId }: { teamId?: string }) => {
-  const teamFeatures: Record<BetaFeatures, boolean> = {
+  return {
     tokens: true,
     incomingWebhooks: true,
     roomChangeNotifications: true,
@@ -29,17 +25,14 @@ export const getFeatureFlags = async ({ teamId }: { teamId?: string }) => {
     conversations: true,
     dataroomUpload: true,
     inDocumentLinks: true,
-    usStorage: true,
+    usStorage: false,
     dataroomIndex: true,
     slack: false,
     annotations: true,
     dataroomInvitations: true,
     workflows: true,
-    ai: true,
+    ai: false,
     sso: false,
     textSelection: true,
   };
-
-
-  return teamFeatures;
 };

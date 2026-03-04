@@ -53,7 +53,7 @@ export const sendEmail = async ({
       from: fromAddress,
       to: test ? "delivered@resend.dev" : to,
       cc: cc,
-      replyTo: marketing ? "marc@papermark.com" : replyTo,
+      replyTo: replyTo,
       subject,
       react,
       scheduledAt,

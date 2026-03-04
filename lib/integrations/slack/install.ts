@@ -11,7 +11,7 @@ export const getSlackInstallationUrl = async (
   const env = getSlackEnv();
 
   const state = nanoid(16);
-  await redis.set(`slack:install:state:${state}`, teamId, {
+  await redis?.set(`slack:install:state:${state}`, teamId, {
     ex: 30 * 60,
   });
 

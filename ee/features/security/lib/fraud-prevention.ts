@@ -1,7 +1,4 @@
-import { NextApiResponse } from "next";
-
 import { stripeInstance } from "@/ee/stripe";
-import { get } from "@vercel/edge-config";
 import { Stripe } from "stripe";
 
 import { log } from "@/lib/utils";
@@ -43,64 +40,10 @@ export async function addEmailToStripeRadar(email: string): Promise<boolean> {
 }
 
 /**
- * Add email to Vercel Edge Config blocklist
+ * No-op: Edge Config blocklist is no longer used.
  */
 export async function addEmailToEdgeConfig(email: string): Promise<boolean> {
-  try {
-    // 1. Read current emails from Edge Config
-    const currentEmails = (await get("emails")) || [];
-
-    // Check if email already exists
-    if (Array.isArray(currentEmails) && currentEmails.includes(email)) {
-      log({
-        message: `Email ${email} already in Edge Config blocklist`,
-        type: "info",
-      });
-      return true;
-    }
-
-    // 2. Add new email
-    const updatedEmails = Array.isArray(currentEmails)
-      ? [...currentEmails, email]
-      : [email];
-
-    // 3. Update via Vercel REST API
-    const response = await fetch(
-      `https://api.vercel.com/v1/edge-config/${process.env.EDGE_CONFIG_ID}/items`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              operation: "update",
-              key: "emails",
-              value: updatedEmails,
-            },
-          ],
-        }),
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error(`Vercel API error: ${response.status}`);
-    }
-
-    log({
-      message: `Added email ${email} to Edge Config blocklist`,
-      type: "info",
-    });
-    return true;
-  } catch (error) {
-    log({
-      message: `Failed to add email to Edge Config: ${error}`,
-      type: "error",
-    });
-    return false;
-  }
+  return true;
 }
 
 /**
@@ -124,33 +67,17 @@ export async function processPaymentFailure(
       type: "info",
     });
 
-    // Add to both Stripe Radar and Edge Config in parallel
-    const [stripeResult, edgeConfigResult] = await Promise.allSettled([
-      addEmailToStripeRadar(email),
-      addEmailToEdgeConfig(email),
-    ]);
+    // Add to Stripe Radar
+    const stripeResult = await addEmailToStripeRadar(email);
 
-    // Log results
-    if (stripeResult.status === "fulfilled" && stripeResult.value) {
+    if (stripeResult) {
       log({
         message: `Successfully added ${email} to Stripe Radar`,
         type: "info",
       });
     } else {
       log({
-        message: `Failed to add ${email} to Stripe Radar:`,
-        type: "error",
-      });
-    }
-
-    if (edgeConfigResult.status === "fulfilled" && edgeConfigResult.value) {
-      log({
-        message: `Successfully added ${email} to Edge Config`,
-        type: "info",
-      });
-    } else {
-      log({
-        message: `Failed to add ${email} to Edge Config:`,
+        message: `Failed to add ${email} to Stripe Radar`,
         type: "error",
       });
     }

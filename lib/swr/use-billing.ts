@@ -131,14 +131,14 @@ export function usePlan({
     pauseStartsAt: plan?.pauseStartsAt,
     pauseEndsAt: plan?.pauseEndsAt,
     discount: plan?.discount || null,
-    isFree: parsedPlan.plan === "free",
-    isStarter: parsedPlan.plan === "starter",
-    isPro: parsedPlan.plan === "pro",
-    isBusiness: parsedPlan.plan === "business",
-    isDatarooms:
-      parsedPlan.plan === "datarooms" || parsedPlan.plan === "datarooms-plus" || parsedPlan.plan === "datarooms-premium",
-    isDataroomsPlus: parsedPlan.plan === "datarooms-plus" || parsedPlan.plan === "datarooms-premium",
-    isDataroomsPremium: parsedPlan.plan === "datarooms-premium",
+    // Self-hosted: treat all plans as highest tier
+    isFree: false,
+    isStarter: false,
+    isPro: false,
+    isBusiness: false,
+    isDatarooms: true,
+    isDataroomsPlus: true,
+    isDataroomsPremium: true,
     loading: !plan && !error && !!teamId, // Only show loading if we have a teamId but no data
     error,
     mutate,

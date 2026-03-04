@@ -99,35 +99,7 @@ export default async function handle(
         return res.status(401).end("Unauthorized");
       }
 
-      // Check if team has access to datarooms (allow trial plans, paid plans, and free plan for onboarding)
-      const allowedPlans = [
-        "business",
-        "datarooms",
-        "datarooms-plus",
-        "datarooms-premium",
-        "business+old",
-        "datarooms+old",
-        "datarooms-plus+old",
-        "datarooms-premium+old",
-        "datarooms+drtrial",
-        "business+drtrial",
-        "datarooms-plus+drtrial",
-        "datarooms-premium+drtrial",
-        "free+drtrial",
-      ];
-
-      // Allow free plan (for onboarding) or any plan that includes allowed plans or drtrial
-      const hasAccess =
-        team.plan === "free" || // Allow free plan during onboarding
-        team.plan.includes("drtrial") || // Allow any trial plan
-        allowedPlans.some((plan) => team.plan.includes(plan));
-
-      if (!hasAccess) {
-        return res.status(403).json({
-          message:
-            "This feature requires a datarooms plan. Please upgrade to access AI-generated data rooms.",
-        });
-      }
+      // Plan check removed for self-hosted: all plans have full access
 
       // Check if team is paused
       const teamIsPaused = await isTeamPausedById(teamId);
@@ -147,19 +119,7 @@ export default async function handle(
 
       const limits = await getLimits({ teamId, userId });
 
-      // Allow first dataroom creation on free plan during onboarding
-      const isFreePlan = team.plan === "free" || team.plan === "free+drtrial";
-      const isFirstDataroom = dataroomCount === 0;
-
-      if (
-        limits &&
-        !(isFreePlan && isFirstDataroom) &&
-        dataroomCount >= limits.datarooms
-      ) {
-        return res
-          .status(403)
-          .json({ message: "You have reached the limit of datarooms" });
-      }
+      // Plan check removed for self-hosted: all plans have full access
 
       const pId = newId("dataroom");
       const dataroomName = name.trim();

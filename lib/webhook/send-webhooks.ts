@@ -44,6 +44,8 @@ const publishWebhookEventToQStash = async ({
   callbackUrl.searchParams.append("eventId", payload.id);
   callbackUrl.searchParams.append("event", payload.event);
 
+  if (!qstash) return;
+
   const signature = await createWebhookSignature(webhook.secret, payload);
 
   const response = await qstash.publishJSON({

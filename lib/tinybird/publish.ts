@@ -4,9 +4,20 @@ import { z } from "zod";
 import { VIDEO_EVENT_TYPES } from "../constants";
 import { WEBHOOK_TRIGGERS } from "../webhook/constants";
 
-const tb = new Tinybird({ token: process.env.TINYBIRD_TOKEN! });
+const tb = process.env.TINYBIRD_TOKEN
+  ? new Tinybird({ token: process.env.TINYBIRD_TOKEN })
+  : null;
 
-export const publishPageView = tb.buildIngestEndpoint({
+const noopIngest = () => Promise.resolve();
+
+function buildIngestEndpoint<T>(
+  opts: Parameters<Tinybird["buildIngestEndpoint"]>[0],
+): T {
+  if (!tb) return noopIngest as unknown as T;
+  return tb.buildIngestEndpoint(opts) as unknown as T;
+}
+
+export const publishPageView = buildIngestEndpoint({
   datasource: "page_views__v3",
   event: z.object({
     id: z.string(),
@@ -40,7 +51,7 @@ export const publishPageView = tb.buildIngestEndpoint({
   }),
 });
 
-export const recordWebhookEvent = tb.buildIngestEndpoint({
+export const recordWebhookEvent = buildIngestEndpoint({
   datasource: "webhook_events__v1",
   event: z.object({
     event_id: z.string(),
@@ -54,7 +65,7 @@ export const recordWebhookEvent = tb.buildIngestEndpoint({
   }),
 });
 
-export const recordVideoView = tb.buildIngestEndpoint({
+export const recordVideoView = buildIngestEndpoint({
   datasource: "video_views__v1",
   event: z.object({
     timestamp: z.string(),
@@ -96,7 +107,7 @@ export const recordVideoView = tb.buildIngestEndpoint({
 });
 
 // Click event tracking when user clicks a link within a document
-export const recordClickEvent = tb.buildIngestEndpoint({
+export const recordClickEvent = buildIngestEndpoint({
   datasource: "click_events__v1",
   event: z.object({
     timestamp: z.string(),
@@ -113,7 +124,7 @@ export const recordClickEvent = tb.buildIngestEndpoint({
 });
 
 // Event track when a visitor opens a link
-export const recordLinkViewTB = tb.buildIngestEndpoint({
+export const recordLinkViewTB = buildIngestEndpoint({
   datasource: "pm_click_events__v1",
   event: z.object({
     timestamp: z.string(),

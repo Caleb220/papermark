@@ -46,6 +46,8 @@ export async function queueNotification({
   dataroomDocumentId: string;
   senderUserId: string;
 }) {
+  if (!redis) return;
+
   const key = itemsKey(viewerId, dataroomId);
   const item: QueueItem = {
     dataroomDocumentId,
@@ -73,6 +75,8 @@ export type DigestBatch = {
 export async function popDigestQueue(
   frequency: "daily" | "weekly",
 ): Promise<DigestBatch[]> {
+  if (!redis) return [];
+
   const setKey = viewerSetKey(frequency);
 
   const members = await redis.smembers(setKey);

@@ -47,5 +47,11 @@ const analytics =
       })
     : emptyAnalytics;
 
-export const identifyUser = (userId: string) => analytics.identify(userId);
-export const trackAnalytics = (args: AnalyticsEvents) => analytics.track(args);
+export const identifyUser = (userId: string) => {
+  if (!process.env.JITSU_HOST || !process.env.JITSU_WRITE_KEY) return;
+  return analytics.identify(userId);
+};
+export const trackAnalytics = (args: AnalyticsEvents) => {
+  if (!process.env.JITSU_HOST || !process.env.JITSU_WRITE_KEY) return;
+  return analytics.track(args);
+};

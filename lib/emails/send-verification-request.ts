@@ -43,7 +43,7 @@ export const sendVerificationRequestEmail = async (params: {
   };
 
   // Store with email:code as key for lookup (must complete before redirecting)
-  await redis.set(
+  await redis?.set(
     `${LOGIN_CODE_EMAIL_PREFIX}${email.toLowerCase()}:${code}`,
     JSON.stringify(loginCodeData),
     { ex: TOKEN_EXPIRATION_SECONDS },
@@ -83,7 +83,7 @@ export const fetchAndDeleteLoginCodeData = async (
 
     // Use GETDEL for atomic get-and-delete operation
     // This prevents race conditions where two requests could use the same code
-    const data = await redis.getdel(key);
+    const data = await redis?.getdel(key);
     if (!data) return null;
 
     // Handle both string and already-parsed object (Redis client behavior)

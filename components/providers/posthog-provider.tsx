@@ -13,10 +13,16 @@ export const PostHogCustomProvider = ({
   children: React.ReactNode;
 }) => {
   const posthogConfig = getPostHogConfig();
+
+  // If PostHog is not configured, just render children without initializing
+  if (!posthogConfig) {
+    return <>{children}</>;
+  }
+
   // const router = useRouter();
 
   // Check that PostHog is client-side
-  if (typeof window !== "undefined" && posthogConfig) {
+  if (typeof window !== "undefined") {
     posthog.init(posthogConfig.key, {
       api_host: posthogConfig.host,
       ui_host: "https://eu.posthog.com",

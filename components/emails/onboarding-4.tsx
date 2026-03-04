@@ -51,7 +51,7 @@ const Onboarding4Email = () => {
             <Section className="mb-[32px] mt-[32px] text-center">
               <Button
                 className="rounded bg-black text-center text-xs font-semibold text-white no-underline"
-                href={`https://app.papermark.com/documents?utm_source=onboarding&utm_medium=email&utm_campaign=20240723&utm_content=upload_documents`}
+                href={`${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/documents`}
                 style={{ padding: "12px 20px" }}
               >
                 Add your domain and branding
@@ -72,7 +72,7 @@ const Onboarding4Email = () => {
               <Text className="text-xs">
                 © {new Date().getFullYear()}{" "}
                 <a
-                  href="https://www.papermark.com"
+                  href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}`}
                   className="text-gray-400 no-underline"
                   target="_blank"
                 >

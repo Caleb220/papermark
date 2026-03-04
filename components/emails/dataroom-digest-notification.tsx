@@ -25,8 +25,8 @@ export default function DataroomDigestNotification({
     { documentName: "Document C" },
   ],
   senderEmail = "example@example.com",
-  url = "https://app.papermark.com/datarooms/123",
-  preferencesUrl = "https://app.papermark.com/notification-preferences?token=abc",
+  url = `${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/datarooms/123`,
+  preferencesUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/notification-preferences?token=abc`,
   frequency = "daily",
 }: {
   dataroomName: string;

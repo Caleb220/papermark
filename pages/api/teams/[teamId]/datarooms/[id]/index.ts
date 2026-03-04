@@ -132,26 +132,8 @@ export default async function handle(
         introductionContent?: any;
       };
 
+      // Plan checks removed for self-hosted: all plans have full access
       const featureFlags = await getFeatureFlags({ teamId: team.id });
-      const isDataroomsPlus = team.plan.includes("datarooms-plus") || team.plan.includes("datarooms-premium");
-      const isTrial = team.plan.includes("drtrial");
-
-      if (
-        enableChangeNotifications !== undefined &&
-        !isDataroomsPlus &&
-        !isTrial &&
-        !featureFlags.roomChangeNotifications
-      ) {
-        return res.status(403).json({
-          message: "This feature is not available in your plan",
-        });
-      }
-
-      if (agentsEnabled !== undefined && !featureFlags.ai) {
-        return res.status(403).json({
-          message: "This feature is not available in your plan",
-        });
-      }
 
       const updatedDataroom = await prisma.$transaction(async (tx) => {
         const dataroom = await tx.dataroom.update({

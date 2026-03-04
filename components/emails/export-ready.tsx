@@ -15,7 +15,7 @@ import { Footer } from "./shared/footer";
 
 export default function ExportReady({
   resourceName = "Export",
-  downloadUrl = "https://app.papermark.com/datarooms/123",
+  downloadUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/datarooms/123`,
   email = "email@example.com",
 }: {
   resourceName?: string;

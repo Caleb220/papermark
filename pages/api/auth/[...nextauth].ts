@@ -28,7 +28,7 @@ function getMainDomainUrl(): string {
   if (process.env.NODE_ENV === "development") {
     return process.env.NEXTAUTH_URL || "http://localhost:3000";
   }
-  return process.env.NEXTAUTH_URL || "https://app.papermark.com";
+  return process.env.NEXTAUTH_URL || "https://app.odinkor.com";
 }
 
 // This function can run for a maximum of 180 seconds
@@ -271,6 +271,7 @@ export const authOptions: NextAuthOptions = {
         userId: message.user.id,
       });
 
+      if (!qstash) return;
       await qstash.publishJSON({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/cron/welcome-user`,
         body: {

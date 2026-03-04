@@ -115,7 +115,7 @@ export default function EmailVerificationClient() {
         <div className="flex w-full justify-center bg-gray-50 md:w-1/2 lg:w-1/2">
           <div className="z-10 mx-5 mt-[calc(1vh)] h-fit w-full max-w-md overflow-hidden rounded-lg sm:mx-0 sm:mt-[calc(2vh)] md:mt-[calc(3vh)]">
             <div className="items-left flex flex-col space-y-3 px-4 py-6 pt-8 sm:px-12">
-              <Link href="https://www.papermark.com" target="_blank">
+              <Link href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}`} target="_blank">
                 <img
                   src="/_static/papermark-logo.svg"
                   alt="Papermark Logo"
@@ -153,7 +153,7 @@ export default function EmailVerificationClient() {
         ></div>
         <div className="z-10 mx-5 mt-[calc(1vh)] h-fit w-full max-w-md overflow-hidden rounded-lg sm:mx-0 sm:mt-[calc(2vh)] md:mt-[calc(3vh)]">
           <div className="items-left flex flex-col space-y-3 px-4 py-6 pt-8 sm:px-12">
-            <Link href="https://www.papermark.com" target="_blank">
+            <Link href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}`} target="_blank">
               <img
                 src="/_static/papermark-logo.svg"
                 alt="Papermark Logo"
@@ -190,7 +190,7 @@ export default function EmailVerificationClient() {
                   href="mailto:system@papermark.com"
                   className="font-medium text-orange-600 underline hover:text-orange-700"
                 >
-                  system@papermark.com
+                  caleb@odinkor.com
                 </a>{" "}
                 is on your allowed senders list.
               </p>

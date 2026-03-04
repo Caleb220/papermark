@@ -17,7 +17,7 @@ async function fetchAndCacheDurations(
   cacheKey: string
 ): Promise<Record<string, number>> {
   let durationsMap: Record<string, number> = {};
-  const cachedDurations = await redis.get(cacheKey);
+  const cachedDurations = await redis?.get(cacheKey);
 
   if (cachedDurations) {
     const parsedDurations = typeof cachedDurations === 'string' ? JSON.parse(cachedDurations) : cachedDurations;
@@ -52,7 +52,7 @@ async function fetchAndCacheDurations(
       });
     }
 
-    await redis.set(cacheKey, JSON.stringify(durationsMap), { ex: 600 });
+    await redis?.set(cacheKey, JSON.stringify(durationsMap), { ex: 600 });
   }
 
   return durationsMap;
@@ -105,7 +105,7 @@ export default async function handle(
         select: { id: true, plan: true },
       });
 
-      if (!team || team.plan === "free") {
+      if (!team) {
         return res.status(404).json({ message: "Team not found" });
       }
 
@@ -292,7 +292,7 @@ export default async function handle(
       };
 
       if (withDuration !== "true") {
-        await redis.set(cacheKey, JSON.stringify(formattedViews), { ex: 600 }); // 10 min cache
+        await redis?.set(cacheKey, JSON.stringify(formattedViews), { ex: 600 }); // 10 min cache
       }
       res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
 

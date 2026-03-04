@@ -58,7 +58,7 @@ function getJacksonDbUrl(): string {
 
 function getJacksonOptions(): JacksonOption {
   return {
-    externalUrl: process.env.NEXTAUTH_URL || "https://app.papermark.com",
+    externalUrl: process.env.NEXTAUTH_URL || "https://app.odinkor.com",
     samlPath: "/api/auth/saml/callback",
     samlAudience,
     db: {

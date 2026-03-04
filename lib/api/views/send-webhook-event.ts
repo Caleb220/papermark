@@ -29,14 +29,7 @@ export async function sendLinkViewWebhook({
       select: { plan: true },
     });
 
-    if (
-      team?.plan === "free" ||
-      team?.plan === "pro" ||
-      team?.plan.includes("trial")
-    ) {
-      // team is not on paid plan, so we don't need to send webhooks
-      return;
-    }
+    // Plan check removed for self-hosted: all plans have full access
 
     // check if team is paused
     const teamIsPaused = await isTeamPausedById(teamId);

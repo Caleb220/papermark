@@ -81,9 +81,7 @@ export const exportVisitsTask = task({
         throw new Error("Team not found or access denied");
       }
 
-      if (team.plan === "free") {
-        throw new Error("This feature is not available for your plan");
-      }
+      // Plan check removed for self-hosted: all plans have full access
 
       let csvData: string;
       let resourceName: string;
@@ -265,7 +263,8 @@ async function exportDocumentVisits(
     throw new Error("Document has no views");
   }
 
-  const isProPlan = document.team.plan.includes("pro");
+  // Plan check removed for self-hosted: all plans have full access
+  const isProPlan = false;
 
   // Collect all unique custom fields from all views
   const uniqueCustomFields = collectUniqueCustomFields(views);

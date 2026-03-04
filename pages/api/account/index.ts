@@ -67,7 +67,7 @@ export default async function handle(
           },
         });
 
-        await redis.set(
+        await redis?.set(
           `email-change-request:user:${sessionUser.id}`,
           {
             email: sessionUser.email,

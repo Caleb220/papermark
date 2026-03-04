@@ -70,6 +70,9 @@ export default async function handler(
     const viewIdValue = `view_${viewId}`;
 
     // Check if the viewId has already reported for this documentId
+    if (!redis) {
+      return res.status(500).json({ status: "error", message: "Redis unavailable" });
+    }
     const hasReported = await redis.sismember(reportKey, viewIdValue);
     if (hasReported) {
       return res.status(400).json({

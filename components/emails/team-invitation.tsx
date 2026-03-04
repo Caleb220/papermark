@@ -19,7 +19,7 @@ export default function TeamInvitation({
   senderName,
   senderEmail,
   teamName,
-  url = "https://app.papermark.com",
+  url = `${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}`,
 }: {
   senderName: string;
   senderEmail: string;

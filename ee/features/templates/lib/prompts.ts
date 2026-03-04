@@ -1,47 +1,20 @@
-import { get } from "@vercel/edge-config";
+const DEFAULT_SYSTEM_PROMPT = `You are an expert at organizing data rooms for business due diligence, fundraising, and document management. Generate a well-structured data room folder hierarchy based on the user's description. Create clear, professional folder names. Use standard industry naming conventions. Keep the structure concise and practical.`;
 
-interface Prompts {
-  "generate-dataroom-system": string;
-  "generate-dataroom-user": string;
-}
+const DEFAULT_USER_PROMPT_TEMPLATE = `Create a data room folder structure for the following use case:
 
-async function getPrompts(): Promise<Prompts> {
-  if (!process.env.EDGE_CONFIG) {
-    throw new Error("Edge Config not configured");
-  }
+{{DESCRIPTION}}
 
-  const prompts = await get<Prompts>("prompts");
-
-  if (!prompts) {
-    throw new Error("Prompts not found in Edge Config");
-  }
-
-  return prompts;
-}
+Generate an appropriate name for the data room and organize it into logical folders with optional subfolders.`;
 
 export async function getDataroomSystemPrompt(): Promise<string> {
-  const prompts = await getPrompts();
-
-  const prompt = prompts["generate-dataroom-system"];
-
-  if (!prompt || typeof prompt !== "string") {
-    throw new Error("Dataroom system prompt not found in Edge Config");
-  }
-
-  return prompt;
+  return DEFAULT_SYSTEM_PROMPT;
 }
 
 export async function getDataroomUserPrompt(
   description: string,
 ): Promise<string> {
-  const prompts = await getPrompts();
-
-  const template = prompts["generate-dataroom-user"];
-
-  if (!template || typeof template !== "string") {
-    throw new Error("Dataroom user prompt not found in Edge Config");
-  }
-
-  return template.replace("{{DESCRIPTION}}", description.trim());
+  return DEFAULT_USER_PROMPT_TEMPLATE.replace(
+    "{{DESCRIPTION}}",
+    description.trim(),
+  );
 }
-

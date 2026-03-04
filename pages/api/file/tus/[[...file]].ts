@@ -193,8 +193,9 @@ const tusServer = new Server({
       throw { status_code: 400, body: "Missing or invalid upload length" };
     }
 
-    const isFree = team.plan === FREE_PLAN || team.plan === FREE_TRIAL_PLAN;
-    const isTrial = team.plan.includes("drtrial");
+    // Plan check removed for self-hosted: all plans have full access
+    const isFree = false;
+    const isTrial = false;
     const teamFileSizeLimitConfig: Parameters<typeof getFileSizeLimits>[0]["limits"] =
       "fileSizeLimits" in limits &&
       typeof limits.fileSizeLimits === "object" &&

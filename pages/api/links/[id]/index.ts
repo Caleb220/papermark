@@ -173,16 +173,11 @@ export default async function handle(
 
       const teamPlan = link.team?.plan || "free";
 
+      // Plan check removed for self-hosted: all plans have full access
       const returnLink = {
         ...link,
         ...linkData,
         dataroomId: undefined,
-        ...(teamPlan === "free" && {
-          customFields: [], // reset custom fields for free plan
-          enableAgreement: false,
-          enableWatermark: false,
-          permissionGroupId: null,
-        }),
       };
 
       return res.status(200).json({ linkType, link: returnLink, brand });
@@ -574,13 +569,7 @@ export default async function handle(
         return res.status(404).json({ error: "Link not found" });
       }
 
-      // Check if team is on free plan
-      if (linkToBeDeleted.team?.plan === "free") {
-        return res.status(403).json({
-          error:
-            "Link deletion is not available on the free plan. Please upgrade to delete links.",
-        });
-      }
+      // Plan check removed for self-hosted: all plans have full access
 
       // Check authorization based on link type
       let isAuthorized = false;

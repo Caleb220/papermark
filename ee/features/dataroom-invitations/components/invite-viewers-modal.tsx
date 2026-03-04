@@ -368,7 +368,7 @@ export function InviteViewersModal({
                 </p>
                 <p>
                   <span className="font-medium text-foreground">From:</span>{" "}
-                  system@papermark.com
+                  caleb@odinkor.com
                 </p>
                 <p>
                   <span className="font-medium text-foreground">To:</span>{" "}

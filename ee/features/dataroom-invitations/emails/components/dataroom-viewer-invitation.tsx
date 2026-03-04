@@ -18,7 +18,7 @@ import { Footer } from "../../../../../components/emails/shared/footer";
 export default function DataroomViewerInvitation({
   dataroomName = "Example Data Room",
   senderEmail = "sender@example.com",
-  url = "https://app.papermark.com/datarooms/123",
+  url = `${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/datarooms/123`,
   recipientEmail = "recipient@example.com",
   customMessage,
 }: {

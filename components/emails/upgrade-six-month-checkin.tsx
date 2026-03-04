@@ -21,17 +21,17 @@ const SixMonthMilestoneEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>6 months with Papermark</Preview>
+      <Preview>6 months with Odinkor</Preview>
       <Tailwind>
         <Body className="font-sans text-sm">
           <Text>Hi {name},</Text>
-          <Text>What&apos;s been your biggest win using Papermark?</Text>
+          <Text>What&apos;s been your biggest win using Odinkor?</Text>
           <Text>
-            Marc here. It&apos;s been 6 months since you using advanced
-            Papermark features! Excited to hear your story and feedback for us.
+            It&apos;s been 6 months since you started using advanced
+            Odinkor features! Excited to hear your story and feedback for us.
           </Text>
 
-          <Text>Marc</Text>
+          <Text>Odinkor</Text>
         </Body>
       </Tailwind>
     </Html>

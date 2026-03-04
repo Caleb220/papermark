@@ -99,46 +99,20 @@ export async function getLimits({
   // parse the limits json with zod and return the limits
   // {datarooms: 1, users: 1, domains: 1, customDomainOnPro: boolean, customDomainInDataroom: boolean}
 
-  try {
-    let parsedData = configSchema.parse(team.limits);
-
-    const basePlan = getBasePlan(team.plan);
-    const isTrial = isTrialPlan(team.plan);
-    const defaultLimits = planLimitsMap[basePlan];
-
-    // Adjust limits based on the plan if they're at the default value
-    if (isFreePlan(team.plan)) {
-      return {
-        ...defaultLimits,
-        ...parsedData,
-        usage: { documents: documentCount, links: linkCount, users: userCount },
-        ...(isTrial && {
-          users: 3,
-        }),
-      };
-    } else {
-      return {
-        ...defaultLimits,
-        ...parsedData,
-        // if account is paid, but link and document limits are not set, then set them to Infinity
-        links: parsedData.links === 50 ? Infinity : parsedData.links,
-        documents:
-          parsedData.documents === 50 ? Infinity : parsedData.documents,
-        usage: { documents: documentCount, links: linkCount, users: userCount },
-      };
-    }
-  } catch (error) {
-    // if no limits set or parsing fails, return default limits based on the plan
-    const basePlan = getBasePlan(team.plan);
-    const isTrial = isTrialPlan(team.plan);
-    const defaultLimits = planLimitsMap[basePlan] || FREE_PLAN_LIMITS;
-    return {
-      ...defaultLimits,
-      conversationsInDataroom: false,
-      usage: { documents: documentCount, links: linkCount, users: userCount },
-      ...(isTrial && {
-        users: 3,
-      }),
-    };
-  }
+  // Self-hosted: always return highest-tier limits
+  return {
+    ...DATAROOMS_PREMIUM_PLAN_LIMITS,
+    links: Infinity,
+    documents: Infinity,
+    domains: 1000,
+    datarooms: 1000,
+    users: Infinity,
+    customDomainOnPro: true,
+    customDomainInDataroom: true,
+    advancedLinkControlsOnPro: true,
+    watermarkOnBusiness: true,
+    agreementOnBusiness: true,
+    conversationsInDataroom: true,
+    usage: { documents: documentCount, links: linkCount, users: userCount },
+  };
 }

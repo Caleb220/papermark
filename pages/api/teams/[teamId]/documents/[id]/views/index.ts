@@ -349,9 +349,8 @@ export default async function handle(
           })
         : 0;
 
-      // filter the last 20 views for free plan
-      const limitedViews =
-        team.plan === "free" && offset >= LIMITS.views ? [] : views;
+      // Plan check removed for self-hosted: all plans have full access
+      const limitedViews = views;
 
       let viewsWithDuration;
       if (document.type === "video") {

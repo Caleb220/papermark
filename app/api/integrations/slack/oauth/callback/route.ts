@@ -39,6 +39,9 @@ export const GET = async (req: Request) => {
 
     // Find workspace that initiated the Stripe app install
     const stateKey = `slack:install:state:${state}`;
+    if (!redis) {
+      return NextResponse.json({ error: "Redis unavailable" }, { status: 500 });
+    }
     const teamId = await redis.get<string>(stateKey);
 
     if (!teamId) {

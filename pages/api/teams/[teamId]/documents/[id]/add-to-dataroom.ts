@@ -62,14 +62,7 @@ export default async function handle(
         return res.status(401).end("Unauthorized");
       }
 
-      if (
-        (team.plan === "free" || team.plan === "pro") &&
-        !team.plan.includes("drtrial")
-      ) {
-        return res.status(403).json({
-          message: "Upgrade your plan to use datarooms.",
-        });
-      }
+      // Plan check removed for self-hosted: all plans have full access
 
       // Fetch dataroom with AI settings
       const dataroom = await prisma.dataroom.findUnique({
