@@ -1,7 +1,7 @@
 FROM node:18-alpine AS base
 
 FROM base AS deps
-RUN apk add --no-cache libc6-compat openssl
+RUN apk add --no-cache libc6-compat openssl python3 make g++
 WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 COPY prisma ./prisma
