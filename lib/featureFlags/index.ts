@@ -31,12 +31,12 @@ export const getFeatureFlags = async ({ teamId }: { teamId?: string }) => {
     inDocumentLinks: true,
     usStorage: true,
     dataroomIndex: true,
-    slack: true,
+    slack: false,
     annotations: true,
     dataroomInvitations: true,
     workflows: true,
     ai: true,
-    sso: true,
+    sso: false,
     textSelection: true,
   };
 
