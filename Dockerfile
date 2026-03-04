@@ -18,7 +18,13 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV HANKO_API_KEY=placeholder
+ENV NEXT_PUBLIC_HANKO_TENANT_ID=placeholder
+ENV QSTASH_TOKEN=placeholder
+ENV UPSTASH_REDIS_REST_URL=placeholder
+ENV UPSTASH_REDIS_REST_TOKEN=placeholder
 RUN npm run build
 
 FROM base AS runner
@@ -26,7 +32,7 @@ WORKDIR /app
 RUN apk add --no-cache openssl
 
 ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 ENV HANKO_API_KEY=placeholder
 ENV NEXT_PUBLIC_HANKO_TENANT_ID=placeholder
 ENV QSTASH_TOKEN=placeholder
