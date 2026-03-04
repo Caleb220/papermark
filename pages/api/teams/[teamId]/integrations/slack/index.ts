@@ -30,6 +30,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!getSlackEnv()) {
+    return res.status(501).json({ error: "Slack integration is not configured" });
+  }
+
   const session = await getServerSession(req, res, authOptions);
   if (!session) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -68,7 +72,7 @@ async function handleGet(
   res: NextApiResponse,
   teamId: string,
 ) {
-  const env = getSlackEnv();
+  const env = getSlackEnv()!;
 
   try {
     const integrationFullData = await prisma.installedIntegration.findUnique({
@@ -111,7 +115,7 @@ async function handleUpdate(
   res: NextApiResponse,
   teamId: string,
 ) {
-  const env = getSlackEnv();
+  const env = getSlackEnv()!;
   try {
     const validationResult = slackIntegrationUpdateSchema.safeParse(req.body);
 
@@ -187,7 +191,7 @@ async function handleDelete(
   res: NextApiResponse,
   teamId: string,
 ) {
-  const env = getSlackEnv();
+  const env = getSlackEnv()!;
   try {
     const integration = await prisma.installedIntegration.findUnique({
       where: {

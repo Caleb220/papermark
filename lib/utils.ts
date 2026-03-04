@@ -535,7 +535,7 @@ export const uploadImage = async (
     if (!presignedRes.ok) {
       throw new Error(`Failed to get presigned URL: ${presignedRes.status}`);
     }
-    const { url, key } = await presignedRes.json();
+    const { url, publicUrl } = await presignedRes.json();
     const uploadRes = await fetch(url, {
       method: "PUT",
       headers: { "Content-Type": file.type },
@@ -544,14 +544,7 @@ export const uploadImage = async (
     if (!uploadRes.ok) {
       throw new Error(`Failed to upload image: ${uploadRes.status}`);
     }
-    // Return the public URL for the uploaded image
-    const endpoint = process.env.NEXT_PUBLIC_UPLOAD_ENDPOINT;
-    if (endpoint) {
-      return `${endpoint}/${key}`;
-    }
-    // Fallback: construct URL from the presigned URL's origin
-    const urlObj = new URL(url);
-    return `${urlObj.origin}/${key}`;
+    return publicUrl;
   }
 
   // Vercel Blob fallback

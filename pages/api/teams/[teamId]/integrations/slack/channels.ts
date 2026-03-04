@@ -18,6 +18,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!getSlackEnv()) {
+    return res.status(501).json({ error: "Slack integration is not configured" });
+  }
+
   const session = await getServerSession(req, res, authOptions);
   if (!session) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -39,7 +43,7 @@ export default async function handler(
     return res.status(403).json({ error: "Access denied" });
   }
 
-  const env = getSlackEnv();
+  const env = getSlackEnv()!;
 
   if (req.method === "GET") {
     try {

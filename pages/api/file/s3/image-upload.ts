@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { getServerSession } from "next-auth";
 import { nanoid } from "nanoid";
 
 import { ONE_HOUR, ONE_SECOND } from "@/lib/constants";
-import { getS3Client } from "@/lib/files/aws-client";
-import { getStorageConfig } from "@/ee/features/storage/config";
+import { getS3PublicClient } from "@/lib/files/aws-client";
 import { CustomUser } from "@/lib/types";
 
 import { authOptions } from "../../auth/[...nextauth]";
@@ -29,6 +28,9 @@ const uploadConfig = {
     maximumSizeInBytes: 5 * 1024 * 1024, // 5MB
   },
 };
+
+// 7 days in seconds - long-lived presigned GET URL for image display
+const IMAGE_GET_EXPIRY = 7 * 24 * 60 * 60;
 
 export default async function handler(
   req: NextApiRequest,
@@ -59,26 +61,41 @@ export default async function handler(
   }
 
   try {
-    const storageConfig = getStorageConfig();
-    const client = getS3Client();
+    const { client, config: storageConfig } = getS3PublicClient();
 
     const ext = fileName.split(".").pop() || "png";
     const key = `images/${nanoid()}.${ext}`;
 
-    const putObjectCommand = new PutObjectCommand({
+    // Generate presigned PUT URL for the client to upload to
+    const putCommand = new PutObjectCommand({
       Bucket: storageConfig.bucket,
       Key: key,
       ContentType: contentType,
-      ACL: "public-read",
     });
-
-    const url = await getSignedUrl(client, putObjectCommand, {
+    const uploadUrl = await getSignedUrl(client, putCommand, {
       expiresIn: ONE_HOUR / ONE_SECOND,
     });
 
-    return res.status(200).json({ url, key });
+    // Generate a long-lived presigned GET URL for displaying the image
+    // If a distribution host (CDN) is configured, use that instead
+    let publicUrl: string;
+    if (storageConfig.distributionHost) {
+      publicUrl = `https://${storageConfig.distributionHost}/${key}`;
+    } else {
+      const getCommand = new GetObjectCommand({
+        Bucket: storageConfig.bucket,
+        Key: key,
+      });
+      publicUrl = await getSignedUrl(client, getCommand, {
+        expiresIn: IMAGE_GET_EXPIRY,
+      });
+    }
+
+    return res.status(200).json({ url: uploadUrl, key, publicUrl });
   } catch (error) {
     console.error("Error generating presigned URL for image:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return res
+      .status(500)
+      .json({ error: (error as Error).message || "Internal server error" });
   }
 }

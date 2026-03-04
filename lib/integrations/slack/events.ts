@@ -42,6 +42,7 @@ export class SlackEventManager {
   async processEvent(eventData: SlackEventData): Promise<void> {
     try {
       const env = getSlackEnv();
+      if (!env) return;
 
       // Fetch integration and team's ignored domains in parallel
       const [integration, team] = await Promise.all([

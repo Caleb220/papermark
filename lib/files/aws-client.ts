@@ -107,3 +107,56 @@ export const getTeamS3ClientAndConfig = async (teamId: string) => {
 
   return { client, config };
 };
+
+/**
+ * Gets S3 client configured with the PUBLIC endpoint for generating presigned URLs
+ * that the browser can reach. Falls back to the internal endpoint if no public endpoint is set.
+ * Use this when generating presigned PUT/GET URLs for client-side uploads/downloads.
+ */
+export const getTeamS3PublicClientAndConfig = async (teamId: string) => {
+  const NEXT_PUBLIC_UPLOAD_TRANSPORT = process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT;
+
+  if (NEXT_PUBLIC_UPLOAD_TRANSPORT !== "s3") {
+    throw new Error("Invalid upload transport");
+  }
+
+  const config = await getTeamStorageConfigById(teamId);
+
+  const client = new S3Client({
+    endpoint: config.publicEndpoint || config.endpoint || undefined,
+    region: config.region,
+    credentials: {
+      accessKeyId: config.accessKeyId,
+      secretAccessKey: config.secretAccessKey,
+    },
+    forcePathStyle: true,
+  });
+
+  return { client, config };
+};
+
+/**
+ * Gets S3 client with public endpoint using default (non-team) config.
+ */
+export const getS3PublicClient = (storageRegion?: string) => {
+  const NEXT_PUBLIC_UPLOAD_TRANSPORT = process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT;
+
+  if (NEXT_PUBLIC_UPLOAD_TRANSPORT !== "s3") {
+    throw new Error("Invalid upload transport");
+  }
+
+  const config = getStorageConfig(storageRegion);
+
+  return {
+    client: new S3Client({
+      endpoint: config.publicEndpoint || config.endpoint || undefined,
+      region: config.region,
+      credentials: {
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey,
+      },
+      forcePathStyle: true,
+    }),
+    config,
+  };
+};

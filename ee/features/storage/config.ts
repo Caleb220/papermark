@@ -7,6 +7,7 @@ export interface StorageConfig {
   accessKeyId: string;
   secretAccessKey: string;
   endpoint?: string;
+  publicEndpoint?: string;
   distributionHost?: string;
   advancedDistributionHost?: string;
   distributionKeyId?: string;
@@ -67,6 +68,7 @@ export function getStorageConfig(storageRegion?: string): StorageConfig {
     accessKeyId: getAccessKeyId(),
     secretAccessKey: getSecretAccessKey(),
     endpoint: process.env[`NEXT_PRIVATE_UPLOAD_ENDPOINT${suffix}`],
+    publicEndpoint: process.env[`NEXT_PRIVATE_UPLOAD_PUBLIC_ENDPOINT${suffix}`],
     distributionHost:
       process.env[`NEXT_PRIVATE_UPLOAD_DISTRIBUTION_HOST${suffix}`],
     advancedDistributionHost:
