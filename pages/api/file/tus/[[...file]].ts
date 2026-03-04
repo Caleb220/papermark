@@ -29,9 +29,9 @@ export const config = {
   },
 };
 
-const locker = new RedisLocker({
-  redisClient: lockerRedisClient,
-});
+const locker = lockerRedisClient
+  ? new RedisLocker({ redisClient: lockerRedisClient })
+  : undefined;
 
 const FREE_PLAN = "free";
 const FREE_TRIAL_PLAN = "free+drtrial";

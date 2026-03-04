@@ -47,11 +47,13 @@ const analytics =
       })
     : emptyAnalytics;
 
-export const identifyUser = (userId: string) => {
-  if (!process.env.JITSU_HOST || !process.env.JITSU_WRITE_KEY) return;
+export const identifyUser = (userId: string): Promise<any> => {
+  if (!process.env.JITSU_HOST || !process.env.JITSU_WRITE_KEY)
+    return Promise.resolve();
   return analytics.identify(userId);
 };
-export const trackAnalytics = (args: AnalyticsEvents) => {
-  if (!process.env.JITSU_HOST || !process.env.JITSU_WRITE_KEY) return;
+export const trackAnalytics = (args: AnalyticsEvents): Promise<any> => {
+  if (!process.env.JITSU_HOST || !process.env.JITSU_WRITE_KEY)
+    return Promise.resolve();
   return analytics.track(args);
 };

@@ -8,13 +8,13 @@ const tb = process.env.TINYBIRD_TOKEN
   ? new Tinybird({ token: process.env.TINYBIRD_TOKEN })
   : null;
 
-const noopIngest = () => Promise.resolve();
+const noopIngest = (..._args: any[]) => Promise.resolve();
 
-function buildIngestEndpoint<T>(
+function buildIngestEndpoint(
   opts: Parameters<Tinybird["buildIngestEndpoint"]>[0],
-): T {
-  if (!tb) return noopIngest as unknown as T;
-  return tb.buildIngestEndpoint(opts) as unknown as T;
+): ReturnType<Tinybird["buildIngestEndpoint"]> {
+  if (!tb) return noopIngest as any;
+  return tb.buildIngestEndpoint(opts);
 }
 
 export const publishPageView = buildIngestEndpoint({

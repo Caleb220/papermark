@@ -124,7 +124,7 @@ export default function CustomDomainSetup({
                 <>
                   Want to learn more about our plans?{" "}
                   <Link
-                    href="${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/settings/upgrade"
+                    href={`${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/settings/upgrade`}
                     className="font-medium text-blue-600 no-underline"
                   >
                     View pricing

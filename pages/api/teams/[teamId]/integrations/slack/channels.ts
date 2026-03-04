@@ -61,6 +61,9 @@ export default async function handler(
 
       try {
         const slackClient = getSlackClient();
+        if (!slackClient) {
+          return res.status(500).json({ error: "Slack not configured" });
+        }
         const channels = await slackClient.getChannels(
           (integration.credentials as SlackCredential).accessToken,
         );

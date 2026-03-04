@@ -237,7 +237,9 @@ export class SlackClient {
 
 // Lazily instantiate
 let _slackClient: SlackClient | null = null;
-export function getSlackClient(): SlackClient {
+export function getSlackClient(): SlackClient | null {
+  if (!process.env.SLACK_CLIENT_ID || !process.env.SLACK_CLIENT_SECRET)
+    return null;
   if (!_slackClient) _slackClient = new SlackClient();
   return _slackClient;
 }

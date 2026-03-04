@@ -6,10 +6,13 @@ import { createSlackMessage } from "./templates";
 import { SlackEventData, SlackIntegrationServer } from "./types";
 
 export class SlackEventManager {
-  private client: SlackClient;
+  private client: SlackClient | null;
 
   constructor() {
-    this.client = new SlackClient();
+    this.client =
+      process.env.SLACK_CLIENT_ID && process.env.SLACK_CLIENT_SECRET
+        ? new SlackClient()
+        : null;
   }
 
   /**
@@ -111,7 +114,7 @@ export class SlackEventManager {
               ...message,
               channel: channel.id,
             };
-            await this.client.sendMessage(
+            await this.client?.sendMessage(
               integration.credentials.accessToken,
               slackMessage,
             );

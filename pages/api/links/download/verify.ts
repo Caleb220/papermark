@@ -185,7 +185,7 @@ export default async function handler(
   const needNewSession = async () => {
     if (!view.dataroomId) return;
     const ipAddressValue = getIpAddress(req.headers) ?? "unknown";
-    const { token, expiresAt } = await createDataroomSession(
+    const session = await createDataroomSession(
       view.dataroomId,
       linkId,
       viewId,
@@ -193,10 +193,11 @@ export default async function handler(
       true,
       view.viewerId ?? undefined,
     );
-    sessionToken = token;
-    const maxAge = Math.floor((expiresAt - Date.now()) / 1000);
+    if (!session) return;
+    sessionToken = session.token;
+    const maxAge = Math.floor((session.expiresAt - Date.now()) / 1000);
     res.setHeader("Set-Cookie", [
-      `pm_drs_${linkId}=${token}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax`,
+      `pm_drs_${linkId}=${session.token}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax`,
     ]);
   };
 

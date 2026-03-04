@@ -8,11 +8,13 @@ const tb = process.env.TINYBIRD_TOKEN
   ? new Tinybird({ token: process.env.TINYBIRD_TOKEN })
   : null;
 
-const noopPipe = () => Promise.resolve({ data: [] });
+const noopPipe = (..._args: any[]) => Promise.resolve({ data: [] });
 
-function buildPipe<T>(opts: Parameters<Tinybird["buildPipe"]>[0]): T {
-  if (!tb) return noopPipe as unknown as T;
-  return tb.buildPipe(opts) as unknown as T;
+function buildPipe(
+  opts: Parameters<Tinybird["buildPipe"]>[0],
+): ReturnType<Tinybird["buildPipe"]> {
+  if (!tb) return noopPipe as any;
+  return tb.buildPipe(opts);
 }
 
 export const getTotalAvgPageDuration = buildPipe({
