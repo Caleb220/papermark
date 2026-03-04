@@ -25,6 +25,10 @@ export default async function handle(
       (session.user as CustomUser).id,
     );
 
+    if (!previewSession) {
+      return res.status(500).json({ error: "Failed to create preview session" });
+    }
+
     return res.status(200).json({ previewToken: previewSession.token });
   } else {
     // We only allow POST requests

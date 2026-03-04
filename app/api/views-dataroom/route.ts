@@ -762,26 +762,28 @@ export async function POST(request: NextRequest) {
             viewer?.id,
           );
 
-          let basePath = `/view/${linkId}`;
-          const cookieId = `pm_drs_${linkId}`;
-          let flagCookieId = `pm_drs_flag_${linkId}`;
+          if (newDataroomSession) {
+            let basePath = `/view/${linkId}`;
+            const cookieId = `pm_drs_${linkId}`;
+            let flagCookieId = `pm_drs_flag_${linkId}`;
 
-          if (link.domainId) {
-            basePath = `/${link.slug}`;
-            flagCookieId = `pm_drs_flag_${link.slug}`;
+            if (link.domainId) {
+              basePath = `/${link.slug}`;
+              flagCookieId = `pm_drs_flag_${link.slug}`;
+            }
+
+            response.cookies.set(cookieId, newDataroomSession.token, {
+              path: "/",
+              expires: new Date(newDataroomSession.expiresAt),
+              httpOnly: true,
+              sameSite: "strict",
+            });
+            response.cookies.set(flagCookieId, "true", {
+              path: basePath,
+              expires: new Date(newDataroomSession.expiresAt),
+              sameSite: "strict",
+            });
           }
-
-          response.cookies.set(cookieId, newDataroomSession?.token, {
-            path: "/",
-            expires: new Date(newDataroomSession?.expiresAt),
-            httpOnly: true,
-            sameSite: "strict",
-          });
-          response.cookies.set(flagCookieId, "true", {
-            path: basePath,
-            expires: new Date(newDataroomSession?.expiresAt),
-            sameSite: "strict",
-          });
         }
 
         return response;
@@ -1076,25 +1078,27 @@ export async function POST(request: NextRequest) {
           viewer?.id,
         );
 
-        let basePath = `/view/${linkId}`;
-        const cookieId = `pm_drs_${linkId}`;
-        let flagCookieId = `pm_drs_flag_${linkId}`;
-        if (link.domainId) {
-          basePath = `/${link.slug}`;
-          flagCookieId = `pm_drs_flag_${link.slug}`;
-        }
+        if (newDataroomSession) {
+          let basePath = `/view/${linkId}`;
+          const cookieId = `pm_drs_${linkId}`;
+          let flagCookieId = `pm_drs_flag_${linkId}`;
+          if (link.domainId) {
+            basePath = `/${link.slug}`;
+            flagCookieId = `pm_drs_flag_${link.slug}`;
+          }
 
-        response.cookies.set(cookieId, newDataroomSession?.token, {
-          path: "/",
-          expires: new Date(newDataroomSession?.expiresAt),
-          httpOnly: true,
-          sameSite: "strict",
-        });
-        response.cookies.set(flagCookieId, "true", {
-          path: basePath,
-          expires: new Date(newDataroomSession?.expiresAt),
-          sameSite: "strict",
-        });
+          response.cookies.set(cookieId, newDataroomSession.token, {
+            path: "/",
+            expires: new Date(newDataroomSession.expiresAt),
+            httpOnly: true,
+            sameSite: "strict",
+          });
+          response.cookies.set(flagCookieId, "true", {
+            path: basePath,
+            expires: new Date(newDataroomSession.expiresAt),
+            sameSite: "strict",
+          });
+        }
       }
 
       return response;
