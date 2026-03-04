@@ -23,7 +23,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV HANKO_API_KEY=placeholder
 ENV NEXT_PUBLIC_HANKO_TENANT_ID=placeholder
 ENV QSTASH_TOKEN=placeholder
-ENV UPSTASH_REDIS_REST_URL=placeholder
+ENV UPSTASH_REDIS_REST_URL=https://placeholder.upstash.io
 ENV UPSTASH_REDIS_REST_TOKEN=placeholder
 RUN npm run build
 
@@ -36,7 +36,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV HANKO_API_KEY=placeholder
 ENV NEXT_PUBLIC_HANKO_TENANT_ID=placeholder
 ENV QSTASH_TOKEN=placeholder
-ENV UPSTASH_REDIS_REST_URL=placeholder
+ENV UPSTASH_REDIS_REST_URL=https://placeholder.upstash.io
 ENV UPSTASH_REDIS_REST_TOKEN=placeholder
 
 RUN addgroup --system --gid 1001 nodejs
