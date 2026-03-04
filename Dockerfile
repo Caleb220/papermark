@@ -27,6 +27,8 @@ ENV UPSTASH_REDIS_REST_URL=https://placeholder.upstash.io
 ENV UPSTASH_REDIS_REST_TOKEN=placeholder
 ENV SLACK_CLIENT_ID=placeholder
 ENV SLACK_CLIENT_SECRET=placeholder
+ENV NEXT_PUBLIC_BASE_URL=https://data.odinkor.com
+ENV NEXT_PUBLIC_MARKETING_URL=https://data.odinkor.com
 RUN npm run build
 
 FROM base AS runner
@@ -42,6 +44,8 @@ ENV UPSTASH_REDIS_REST_URL=https://placeholder.upstash.io
 ENV UPSTASH_REDIS_REST_TOKEN=placeholder
 ENV SLACK_CLIENT_ID=placeholder
 ENV SLACK_CLIENT_SECRET=placeholder
+ENV NEXT_PUBLIC_BASE_URL=https://data.odinkor.com
+ENV NEXT_PUBLIC_MARKETING_URL=https://data.odinkor.com
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
