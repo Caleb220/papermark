@@ -24,7 +24,7 @@ const DataroomTrial24hReminderEmail = ({ name }: TrialEndReminderEmail) => {
   return (
     <Html>
       <Head />
-      <Preview>Upgrade to Papermark Data Rooms Plan</Preview>
+      <Preview>Upgrade to Odinkor Data Rooms Plan</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 w-[465px] p-5">
@@ -38,7 +38,7 @@ const DataroomTrial24hReminderEmail = ({ name }: TrialEndReminderEmail) => {
               Hey{name && ` ${name}`}!
             </Text>
             <Text className="text-sm leading-6 text-black">
-              Your Papermark Data Room plan trial expires in 24 hours.
+              Your Odinkor Data Room plan trial expires in 24 hours.
               Don&apos;t lose access to these features -{" "}
               <Link href={`${process.env.NEXT_PUBLIC_BASE_URL || "https://app.odinkor.com"}/settings/billing`}>
                 upgrade today

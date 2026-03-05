@@ -512,9 +512,9 @@ export default function SlackSettings() {
                             </Button>
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            To add Papermark to a private channel, type{" "}
+                            To add Odinkor to a private channel, type{" "}
                             <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
-                              /invite @Papermark
+                              /invite @Odinkor
                             </code>{" "}
                             in that channel first, then refresh the list.
                           </p>

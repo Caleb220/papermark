@@ -64,13 +64,13 @@ export default function Login() {
             <Link href="https://www.papermark.com" target="_blank">
               <img
                 src="/_static/papermark-logo.svg"
-                alt="Papermark Logo"
+                alt="Odinkor Logo"
                 className="md:mb-48s -mt-8 mb-36 h-7 w-auto self-start sm:mb-32"
               />
             </Link>
             <Link href="/">
               <span className="text-balance text-3xl font-semibold text-gray-900">
-                Welcome to Papermark
+                Welcome to Odinkor
               </span>
             </Link>
             <h3 className="text-balance text-sm text-gray-800">
@@ -237,7 +237,7 @@ export default function Login() {
           </div>
           <p className="mt-10 w-full max-w-md px-4 text-xs text-muted-foreground sm:px-12">
             By clicking continue, you acknowledge that you have read and agree
-            to Papermark&apos;s{" "}
+            to Odinkor&apos;s{" "}
             <a
               href={`${process.env.NEXT_PUBLIC_MARKETING_URL}/terms`}
               target="_blank"
@@ -280,7 +280,7 @@ export default function Login() {
               <div className="max-w-xl text-center">
                 <blockquote className="text-balance font-normal leading-8 text-white sm:text-xl sm:leading-9">
                   <p>
-                    &quot;We raised our €30M Fund with Papermark Data Rooms.
+                    &quot;We raised our €30M Fund with Odinkor Data Rooms.
                     Love the customization, security and ease of use.&quot;
                   </p>
                 </blockquote>

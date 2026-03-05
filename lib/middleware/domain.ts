@@ -57,7 +57,7 @@ export default async function DomainMiddleware(req: NextRequest) {
     headers: {
       "X-Robots-Tag": "noindex",
       "X-Powered-By":
-        "Papermark - Secure Data Room Infrastructure for the modern web",
+        "Odinkor - Secure Data Room Infrastructure for the modern web",
     },
   });
 }

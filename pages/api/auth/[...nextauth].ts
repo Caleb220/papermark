@@ -313,6 +313,18 @@ const getAuthOptions = (req: NextApiRequest): NextAuthOptions => {
           return false;
         }
 
+        // ─── Allowed email domain restriction ───
+        const allowedSignUps = process.env.ALLOWED_SIGN_UPS;
+        if (allowedSignUps && user.email) {
+          const allowedDomains = allowedSignUps
+            .split(",")
+            .map((d) => d.trim().toLowerCase());
+          const userDomain = `@${user.email.split("@")[1]?.toLowerCase()}`;
+          if (!allowedDomains.some((d) => userDomain === d)) {
+            return false;
+          }
+        }
+
         // ─── SSO Enforcement ───
         // If user is NOT signing in via SAML, check if their domain requires SSO
         if (

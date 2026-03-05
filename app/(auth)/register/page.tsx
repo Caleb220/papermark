@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import RegisterClient from "./page-client";
 
 const data = {
-  description: "Signup to Papermark",
-  title: "Sign up | Papermark",
+  description: "Signup to Odinkor",
+  title: "Sign up | Odinkor",
   url: "/register",
 };
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: data.title,
     description: data.description,
     url: data.url,
-    siteName: "Papermark",
+    siteName: "Odinkor",
     images: [
       {
         url: "/_static/meta-image.png",

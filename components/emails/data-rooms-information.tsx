@@ -32,7 +32,7 @@ const DataRoomsInformationEmail = () => {
             </Text>
             <Text className="text-sm">Unlimited branded data rooms!</Text>
             <Text className="text-sm">
-              With Papermark Data Rooms plan you can:
+              With Odinkor Data Rooms plan you can:
             </Text>
             <ul className="list-inside list-disc text-sm">
               <li>Share data rooms with one link</li>
@@ -45,7 +45,7 @@ const DataRoomsInformationEmail = () => {
               <li>Use advanced link settings</li>
             </ul>
             <Text className="text-sm">
-              All about Papermark{" "}
+              All about Odinkor{" "}
               <a
                 href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}/data-room`}
                 className="text-blue-500 underline"

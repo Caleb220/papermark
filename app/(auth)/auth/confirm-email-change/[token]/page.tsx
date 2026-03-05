@@ -20,7 +20,7 @@ export const runtime = "nodejs";
 
 const data = {
   description: "Confirm email change",
-  title: "Confirm email change | Papermark",
+  title: "Confirm email change | Odinkor",
   url: "/auth/confirm-email-change",
 };
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: data.title,
     description: data.description,
     url: data.url,
-    siteName: "Papermark",
+    siteName: "Odinkor",
     images: [
       {
         url: "/_static/meta-image.png",

@@ -14,10 +14,10 @@ const DataroomTrialWelcomeEmail = ({ name }: WelcomeEmailProps) => {
         <Body className="font-sans text-sm">
           <Text>Hi{name && ` ${name}`},</Text>
           <Text>
-            I am Marc, founder of Papermark. Thanks for creating a trial. Do you
+            Thanks for creating a trial from the Odinkor team. Do you
             need any help with Data Rooms setup?
           </Text>
-          <Text>Marc</Text>
+          <Text>The Odinkor Team</Text>
         </Body>
       </Tailwind>
     </Html>

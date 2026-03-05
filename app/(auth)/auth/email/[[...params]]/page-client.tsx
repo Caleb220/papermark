@@ -118,7 +118,7 @@ export default function EmailVerificationClient() {
               <Link href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}`} target="_blank">
                 <img
                   src="/_static/papermark-logo.svg"
-                  alt="Papermark Logo"
+                  alt="Odinkor Logo"
                   className="-mt-8 mb-36 h-7 w-auto self-start sm:mb-32 md:mb-48"
                 />
               </Link>
@@ -156,7 +156,7 @@ export default function EmailVerificationClient() {
             <Link href={`${process.env.NEXT_PUBLIC_MARKETING_URL || "https://www.odinkor.com"}`} target="_blank">
               <img
                 src="/_static/papermark-logo.svg"
-                alt="Papermark Logo"
+                alt="Odinkor Logo"
                 className="-mt-8 mb-36 h-7 w-auto self-start sm:mb-32 md:mb-48"
               />
             </Link>
@@ -262,7 +262,7 @@ export default function EmailVerificationClient() {
 
           <p className="mt-10 w-full max-w-md px-4 text-xs text-muted-foreground sm:px-12">
             By clicking continue, you acknowledge that you have read and agree
-            to Papermark&apos;s{" "}
+            to Odinkor&apos;s{" "}
             <a
               href={`${process.env.NEXT_PUBLIC_MARKETING_URL}/terms`}
               target="_blank"
@@ -312,7 +312,7 @@ function TestimonialSection() {
             <div className="max-w-xl text-center">
               <blockquote className="text-balance font-normal leading-8 text-white sm:text-xl sm:leading-9">
                 <p>
-                  &quot;We raised our €30M Fund with Papermark Data Rooms. Love
+                  &quot;We raised our €30M Fund with Odinkor Data Rooms. Love
                   the customization, security and ease of use.&quot;
                 </p>
               </blockquote>

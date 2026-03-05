@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 const data = {
   description:
-    "Papermark is an open-source document sharing infrastructure. Free alternative to Docsend with custom domain. Manage secure document sharing with real-time analytics.",
-  title: "Papermark | The Open Source DocSend Alternative",
+    "Odinkor is a secure document sharing platform. Manage secure document sharing with real-time analytics.",
+  title: "Odinkor | Secure Document Sharing",
   url: "/",
 };
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: data.title,
     description: data.description,
     url: data.url,
-    siteName: "Papermark",
+    siteName: "Odinkor",
     images: [
       {
         url: "/_static/meta-image.png",

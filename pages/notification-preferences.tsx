@@ -168,12 +168,12 @@ export default function NotificationPreferencesPage({
   return (
     <>
       <Head>
-        <title>Notification Preferences | Papermark</title>
+        <title>Notification Preferences | Odinkor</title>
       </Head>
       <div className="flex min-h-screen flex-col bg-gray-50">
         <header className="px-6 py-5">
           <a
-            href="https://www.papermark.com"
+            href="https://www.odinkor.com"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -181,7 +181,7 @@ export default function NotificationPreferencesPage({
               src={PapermarkLogo}
               width={119}
               height={32}
-              alt="Papermark"
+              alt="Odinkor"
             />
           </a>
         </header>
@@ -321,12 +321,12 @@ export default function NotificationPreferencesPage({
             <p className="mt-4 text-center text-xs text-muted-foreground/60">
               Powered by{" "}
               <a
-                href="https://www.papermark.com"
+                href="https://www.odinkor.com"
                 className="underline underline-offset-2 transition-colors hover:text-muted-foreground"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Papermark
+                Odinkor
               </a>
             </p>
           </motion.div>

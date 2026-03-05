@@ -20,24 +20,24 @@ const ThousandViewsCongratsEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>1000 views on Papermark.</Preview>
+      <Preview>1000 views on Odinkor.</Preview>
       <Tailwind>
         <Body className="font-sans text-sm">
           <Text>Hi{name && ` ${name}`},</Text>
           <Text>
-            I&apos;m Marc, founder of Papermark. Congrats on 1000 views on your
-            documents.
+            Congrats on 1000 views on your
+            documents from the Odinkor team.
           </Text>
           <Text>How is your experience so far?</Text>
 
           <Text>
             Thanks so much,
             <br />
-            Marc
+            The Odinkor Team
           </Text>
           <Text>
             <Link
-              href="https://www.g2.com/products/papermark/reviews"
+              href="https://www.g2.com/products/odinkor/reviews"
               target="_blank"
               className="text-blue-500 underline"
               rel="noopener noreferrer"

@@ -215,13 +215,13 @@ export default function AccessForm({
           >
             This document is securely shared with you using{" "}
             <a
-              href="https://www.papermark.com"
+              href="https://www.odinkor.com"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium"
               style={{ color: accessFormTheme.mutedTextColor }}
             >
-              Papermark
+              Odinkor
             </a>
             .
           </p>
